@@ -11,6 +11,26 @@ var config      = require('../../config/database'); // get db config file
 require('../../config/passport')(passport);
 var apiAdmin = express.Router();
 
+apiAdmin.post('/signup', function(req, res) {
+    if (!req.body.name || !req.body.password) {
+        res.json({success: false, msg: 'Please pass name and password.'});
+    } else {
+        var newAdmin = new Admin({
+            'User.name': req.body.name,
+            'User.password': req.body.password
+        });
+        console.log(newAdmin);
+        // save the user
+        newAdmin.save(function(err) {
+            console.log("here");
+            if (err) {
+                console.log(err);
+                return res.json({success: false, msg: 'Erreur.'});
+            }
+            res.json({success: true, msg: 'Successful created new user.'});
+        });
+    }
+});
 
 apiAdmin.post('/authenticateadmin', function(req, res) {
     Admin.findOne({

@@ -48,6 +48,7 @@ angular.module('starter')
   $scope.getInfo = function() {
     $http.get(API_ENDPOINT.url + '/memberinfoadmin').then(function(result) {
       $scope.memberinfo = result.data.msg;
+      console.log($scope.memberinfo);
     });
   };
 

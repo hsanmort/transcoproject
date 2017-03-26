@@ -8,12 +8,12 @@ var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 
 var AdminSchema =new Schema({
-    matricule: {type: Number},
+    matricule: {type: Number, index:true},
 
     User:{
         email: { type: String, lowercase: true, trim: true }
 
-        , name: { type: String  , required: true}
+        , name: { type: String, required: true}
 
         , image: {type: String}
 
