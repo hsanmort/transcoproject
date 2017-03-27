@@ -15,7 +15,6 @@ angular.module('starter', [
   'starter.directives',
   'starter.filters',
   'starter.services',
-  'starter.factories',
   'starter.config',
   'underscore',
   'ngMap',
@@ -26,7 +25,7 @@ angular.module('starter', [
   'youtube-embed'
 ])
 
-.run(function($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout) {
+.run(function($ionicPlatform, $rootScope, $ionicConfig, $timeout) {
 
   $ionicPlatform.on("deviceready", function(){
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -53,24 +52,6 @@ angular.module('starter', [
       }, 0);
     }
   });
-  $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
-    if(toState.name.indexOf('app.feeds-categories') > -1)
-    {
-      // Restore platform default transition. We are just hardcoding android transitions to auth views.
-      $ionicConfig.views.transition('platform');
-      // If it's ios, then enable swipe back again
-      if(ionic.Platform.isIOS())
-      {
-        $ionicConfig.views.swipeBackEnabled(true);
-      }
-    	console.log("enabling swipe back and restoring transition to platform default", $ionicConfig.views.transition());
-    }
-  });
-
-  $ionicPlatform.on("resume", function(){
-    PushNotificationsService.register();
-  });
-
 })
 
 
@@ -104,8 +85,7 @@ angular.module('starter', [
 
   .state('auth.forgot-password', {
     url: "/forgot-password",
-    templateUrl: "views/auth/forgot-password.html",
-    controller: 'ForgotPasswordCtrl'
+    templateUrl: "views/auth/forgot-password.html"
   })
 
   .state('app', {
@@ -139,8 +119,7 @@ angular.module('starter', [
     url: "/miscellaneous/image-picker",
     views: {
       'menuContent': {
-        templateUrl: "views/app/miscellaneous/image-picker.html",
-        controller: 'ImagePickerCtrl'
+        templateUrl: "views/app/miscellaneous/image-picker.html"
       }
     }
   })
@@ -159,8 +138,7 @@ angular.module('starter', [
     url: "/layouts/tinder-cards",
     views: {
       'menuContent': {
-        templateUrl: "views/app/layouts/tinder-cards.html",
-        controller: 'TinderCardsCtrl'
+        templateUrl: "views/app/layouts/tinder-cards.html"
       }
     }
   })
@@ -179,8 +157,7 @@ angular.module('starter', [
     url: "/feeds-categories",
     views: {
       'menuContent': {
-        templateUrl: "views/app/feeds/feeds-categories.html",
-        controller: 'FeedsCategoriesCtrl'
+        templateUrl: "views/app/feeds/feeds-categories.html"
       }
     }
   })
@@ -189,8 +166,7 @@ angular.module('starter', [
     url: "/category-feeds/:categoryId",
     views: {
       'menuContent': {
-        templateUrl: "views/app/feeds/category-feeds.html",
-        controller: 'CategoryFeedsCtrl'
+        templateUrl: "views/app/feeds/category-feeds.html"
       }
     }
   })
@@ -199,8 +175,7 @@ angular.module('starter', [
     url: "/feed-entries/:categoryId/:sourceId",
     views: {
       'menuContent': {
-        templateUrl: "views/app/feeds/feed-entries.html",
-        controller: 'FeedEntriesCtrl'
+        templateUrl: "views/app/feeds/feed-entries.html"
       }
     }
   })
@@ -210,31 +185,11 @@ angular.module('starter', [
     url: "/wordpress",
     views: {
       'menuContent': {
-        templateUrl: "views/app/wordpress/wordpress.html",
-        controller: 'WordpressCtrl'
+        templateUrl: "views/app/wordpress/wordpress.html"
       }
     }
   })
 
-  .state('app.post', {
-    url: "/wordpress/:postId",
-    views: {
-      'menuContent': {
-        templateUrl: "views/app/wordpress/wordpress_post.html",
-        controller: 'WordpressPostCtrl'
-      }
-    },
-    resolve: {
-      post_data: function(PostService, $ionicLoading, $stateParams) {
-        $ionicLoading.show({
-      		template: 'Loading post ...'
-      	});
-
-        var postId = $stateParams.postId;
-        return PostService.getPost(postId);
-      }
-    }
-  })
 
   //OTHERS
   .state('app.settings', {
@@ -242,7 +197,6 @@ angular.module('starter', [
     views: {
       'menuContent': {
         templateUrl: "views/app/settings.html",
-        controller: 'SettingsCtrl'
       }
     }
   })
@@ -260,8 +214,7 @@ angular.module('starter', [
     url: "/profile",
     views: {
       'menuContent': {
-        templateUrl: "views/app/profile.html",
-        controller: "ProfileCtrl"
+        templateUrl: "views/app/profile.html"
       }
     }
   })
@@ -270,8 +223,7 @@ angular.module('starter', [
     url: "/bookmarks",
     views: {
       'menuContent': {
-        templateUrl: "views/app/bookmarks.html",
-        controller: 'BookMarksCtrl'
+        templateUrl: "views/app/bookmarks.html"
       }
     }
   })
